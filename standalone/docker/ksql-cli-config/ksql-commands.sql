@@ -1,0 +1,4 @@
+CREATE STREAM log_metrica (data string, cpf string, macBalanca string,kgPeso string, percentualTaxaMusculo string, percentualTeorAgua string, kgMassaOssea string, kcalTaxaMetabolicaBasal string, percentualProteina string, idadeCorporal string, idadeGorduraVisceral string, taxaGorduraSubcutanea string, kgGorduraCoporal string, indiceMassaCorporal string, percentualTaxaGorduraCoroporal string)  WITH (KAFKA_TOPIC='bioimpedancia.metrica', VALUE_FORMAT='json');
+
+
+CREATE STREAM send_log_metrica WITH (KAFKA_TOPIC = 'logs', VALUE_FORMAT='json') AS SELECT data, cpf , macBalanca,kgPeso, percentualTaxaMusculo , percentualTeorAgua , kgMassaOssea , kcalTaxaMetabolicaBasal , percentualProteina , idadeCorporal, idadeGorduraVisceral, taxaGorduraSubcutanea , kgGorduraCoporal, indiceMassaCorporal, percentualTaxaGorduraCoroporal  FROM log_metrica;
