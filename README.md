@@ -1,87 +1,22 @@
 # docker-compose
 
-```yml
-version: '3'
-services:
+# kafkacat
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:5.1.1
-    hostname: zookeeper
-    container_name: zookeeper
-    ports:
-      - 2181:2181
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+Instalando o kafkacat
 
-  kafka:
-    #build:
-    #  context: ./kafka
-    #  dockerfile: Dockerfile
-    image: confluentinc/cp-kafka
-    hostname: kafka
-    container_name: kafka
-    ports:
-      - 9092:9092
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.0.1.119:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+> sudo apt-get install kafkacat
 
-  topic-creation:
-    image: confluentinc/cp-kafka
-    command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --topic bioimpedancia.trabalhador  --create --partitions 1 --replication-factor 1 && kafka-topics --zookeeper zookeeper:2181 --topic bioimpedancia.metrica  --create --partitions 1 --replication-factor 1 && kafka-topics --zookeeper zookeeper:2181 --topic bioimpedancia.lote  --create --partitions 1 --replication-factor 1 && kafka-topics --zookeeper zookeeper:2181 --topic bioimpedancia.log  --create --partitions 1 --replication-factor 1"
-    depends_on:
-      - zookeeper
+Listar todos os brokers disponíveis no cluster 
 
-  ksql:
-    image: confluentinc/cp-ksql-server:5.1.1
-    hostname: ksql
-    container_name: ksql
-    depends_on:
-      - kafka
-    ports:
-      - 8088:8088
-    environment:
-      KSQL_BOOTSTRAP_SERVERS: kafka:9092
-      KSQL_LISTENERS: http://0.0.0.0:8088
-      KSQL_KSQL_SERVICE_ID: ksql_service_id
-    links:
-      - kafka
+> kafkacat -L -b kafka-1:19092
 
-  kafka-rest-proxy:
-    image: confluentinc/cp-kafka-rest:5.1.2
-    hostname: kafka-rest-proxy
-    container_name: kafka-rest-proxy
-    ports:
-      - "8082:8082"
-    environment:
-      # KAFKA_REST_ZOOKEEPER_CONNECT: zoo1:2181
-      KAFKA_REST_LISTENERS: http://0.0.0.0:8082/
-      #KAFKA_REST_SCHEMA_REGISTRY_URL: http://kafka-schema-registry:8081/
-      KAFKA_REST_HOST_NAME: kafka-rest-proxy
-      KAFKA_REST_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
-    depends_on:
-      - zookeeper
-      - kafka
+Produzir mensagem para um tópico
 
-  kafka-topics-ui:
-    image: landoop/kafka-topics-ui:0.9.4
-    hostname: kafka-topics-ui
-    container_name: kafka-topics-ui
-    ports:
-      - "8000:8000"
-    environment:
-      KAFKA_REST_PROXY_URL: "http://kafka-rest-proxy:8082/"
-      PROXY: "true"
-    depends_on:
-      - zookeeper
-      - kafka
-      - kafka-rest-proxy
-```
+> kafkacat -P -b kafka-1:19092 -t helloworld_topic
+
+Ler as mensagens de um tópico
+
+> kafkacat -C -b kafka-3:39092 -t helloworld_topic
 
 # Run KSQL 
 ```
