@@ -18,6 +18,9 @@ Ler as mensagens de um tópico
 
 > kafkacat -C -b kafka-3:39092 -t helloworld_topic
 
+Créditos: [https://github.com/edenhill/kafkacat]
+
+
 # Run KSQL 
 ```
 docker run -it confluentinc/cp-ksql-cli:5.1.1 http://{id_do_host}:8088
