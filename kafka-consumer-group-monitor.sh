@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #####################################################
-# Kafka Consumer Group Monitor
+# Kafka Consumer Group Monitor TOPIC, CURRENT-OFFSET, LOG-END-OFFSET, LAG, DATA
 # 
 # KAFKA_SERVER - Kafka IP or hostname
 # KAFKA_PORT -  Kafka Port
