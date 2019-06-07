@@ -12,6 +12,8 @@
 # > ./kafka-consumer-group-monitor.sh > kafka-group.log
 ######################################################
 
+export TZ=America/Sao_Paulo
+
 KAFKA_SERVER=kafka
 KAFKA_PORT=9092
 INTERVAL_SECONDS=10
