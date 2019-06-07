@@ -1,7 +1,10 @@
 #!/bin/sh
 
-#####################################################
-# Kafka Consumer Group Monitor TOPIC, CURRENT-OFFSET, LOG-END-OFFSET, LAG, DATA
+##########################################################################
+# Kafka Consumer Group Monitor 
+#
+# This script monitor some filds from kafka like: TOPIC, CURRENT-OFFSET, 
+# LOG-END-OFFSET, LAG, DATE (actual date)
 # 
 # KAFKA_SERVER - Kafka IP or hostname
 # KAFKA_PORT -  Kafka Port
@@ -10,7 +13,7 @@
 #
 # You can run script with output to file  
 # > ./kafka-consumer-group-monitor.sh > kafka-group.log
-######################################################
+##########################################################################
 
 export TZ=America/Sao_Paulo
 
