@@ -19,6 +19,7 @@ GROUP_NAME=groupid-metrica-consumer
 
 while :
 do
-  kafka-consumer-groups --bootstrap-server $KAFKA_SERVER:9092 --describe --group $GROUP_NAME | awk -v data="$(date +'%d/%m/%Y-%H:%M:%S')" '{if(NR>2)print $1",",$2",",$3",",$4",",data}'
+  kafka-consumer-groups --bootstrap-server $KAFKA_SERVER:9092 --describe --group $GROUP_NAME | \
+     awk -v data="$(date +'%d/%m/%Y-%H:%M:%S')" '{if(NR>2)print $1",",$3",",$4",",$5",",data}'
   sleep $INTERVAL_SECONDS
 done
