@@ -36,9 +36,7 @@ class Consumer(threading.Thread):
     def run(self):
         server='brocker:porta'
         topic='nome-do-topico'  
-        consumer = KafkaConsumer(bootstrap_servers=server,
-                                 auto_offset_reset='earliest',
-                                 consumer_timeout_ms=1000,enable_auto_commit=True)
+        consumer = KafkaConsumer(bootstrap_servers=server, auto_offset_reset='earliest', consumer_timeout_ms=1000,enable_auto_commit=True)
         consumer.subscribe([topic])
         print("Consumindo eventos to topico: "+topic+"  - kafka server: " + server)
         while not self.stop_event.is_set():
